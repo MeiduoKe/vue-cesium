@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE 学习 作用域插槽</title>
+    <script src="./js/vue.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    // 具名插槽
+    // v-slot 简写 #
+    // 作用域插槽
+    const app = Vue.createApp({
+        // template: `
+        //     <list v-slot="slotProups">
+        //         <div>{{slotProups.item}}</div>
+        //     </list>
+        // `
+        // 解聚
+        template: `
+            <list v-slot="{item}">
+                <div>{{item}}</div>
+            </list>
+        `
+    });
+
+    app.component("list", {
+        data(){
+            return {list : [1,2,3,4]};
+        },
+        template: `
+          <div>
+            <slot v-for="item in list" :item="item"></slot>
+          </div>
+        `
+    });
+
+    const vm = app.mount("#app");
+
+</script>
+</html>
