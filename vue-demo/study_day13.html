@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue 学习 使用插槽和具名函数解决组件内容传递问题（1）</title>
+    <script src="./js/vue.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    // slot 插槽
+    const app = Vue.createApp({
+        data (){
+            return {
+                test : "提交"
+            }
+        },
+        template: `
+            <myForm>
+                 <div>{{test}}</div>
+<!--                <test></test>-->
+            </myForm>
+            <myForm>
+                <button>{{test}}</button>
+            </myForm>
+            `
+    });
+
+    app.component("test", {
+        template:`<div>test</div>`
+    });
+
+    app.component("myForm", {
+        methods: {
+            handlerClick() {
+                alert(123)
+            },
+        },
+        template: `
+          <div>
+              <input/>
+              <span @click="handlerClick">
+                <slot></slot>
+              </span>
+          </div>
+        `
+    });
+
+    const vm = app.mount("#app");
+
+</script>
+</html>
