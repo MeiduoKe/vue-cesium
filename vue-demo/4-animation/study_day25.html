@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用transition 标签实现单元素组件的过渡与动画效果（1）</title>
+    <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <script src="../js/vue.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    // 单元素、单祖建的入场动画
+    const app = Vue.createApp({
+        data() {
+            return {
+                show: false
+            }
+        },
+        methods: {
+            handlerClick() {
+                this.show = !this.show;
+            },
+        },
+        template: `
+          <div>
+          <transition
+            enter-active-class="animate__animated animate__flash"
+            leave-active-class="animate__animated animate__flash"
+          >
+            <div v-if="show">Hello World</div>
+          </transition>
+          <button @click="handlerClick">切换</button>
+          </div>
+        `
+    });
+
+    const vm = app.mount("#app");
+</script>
+</html>
