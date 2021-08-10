@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE 基础语法查漏补缺</title>
+    <script src="../js/vue.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    // provide\inject 跨组件传参， 传递的参数是一次性的，不会改变
+    const app = Vue.createApp({
+        data() {
+            return {
+                count : 1
+            }
+        },
+        // provide:{
+        //     count: 1
+        // },
+        provide(key, value) { // 不可以直接使用 this
+            return {
+                count:this.count
+            };
+        },
+        template: `
+            <div>
+                <child></child>
+            </div>
+        `
+    });
+
+    app.component("child", {
+        template: `<child-child></child-child>`
+    });
+
+    app.component("child-child", {
+        inject : ["count"],
+        template: `<div>{{count}}</div>`
+    });
+
+    const vm = app.mount("#app");
+
+</script>
+</html>
