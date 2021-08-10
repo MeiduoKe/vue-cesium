@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VUE 学习（动态组件）</title>
+    <script src="./js/vue.global.js"></script>
+</head>
+<script>
+    // 动态组件：根据数据的变化，结合component标签，实现随时切换组件的内容
+    // keep-alive 缓存组件
+    const app = Vue.createApp({
+        data() {
+            return {
+                currentItem: 'input-item'
+            }
+        },
+        methods: {
+            handlerClick() {
+                this.currentItem = this.currentItem === "input-item" ? "common-item" : "input-item";
+            }
+        },
+        // template: `
+        //   <input-item v-show="currentItem === 'input-item'"></input-item>
+        //   <common-item v-show="currentItem === 'common-item'"></common-item>
+        //   <button @click="handlerClick">切换</button>
+        // `
+        // 动态组件
+        template: `
+          <keep-alive>
+          <component :is="currentItem"></component>
+          </keep-alive>
+          <button @click="handlerClick">切换</button>
+        `
+    });
+
+    app.component("input-item", {
+        template: `<input />`
+    });
+
+    app.component("common-item", {
+        template: `<div>Hello World</div>`
+    });
+
+    const vm = app.mount("#app");
+
+</script>
+<body>
+<div id="app"></div>
+</body>
+</html>
