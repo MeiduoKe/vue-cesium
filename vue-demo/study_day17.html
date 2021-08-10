@@ -5,44 +5,34 @@
     <title>VUE 学习（异步组件）</title>
     <script src="./js/vue.global.js"></script>
 </head>
+<body>
+<div id="app"></div>
+</body>
 <script>
     const app = Vue.createApp({
-        data() {
-            return {
-                currentItem: 'input-item'
-            }
-        },
-        methods: {
-            handlerClick() {
-                this.currentItem = this.currentItem === "input-item" ? "common-item" : "input-item";
-            }
-        },
-        // template: `
-        //   <input-item v-show="currentItem === 'input-item'"></input-item>
-        //   <common-item v-show="currentItem === 'common-item'"></common-item>
-        //   <button @click="handlerClick">切换</button>
-        // `
-        // 动态组件
         template: `
-          <keep-alive>
-          <component :is="currentItem"></component>
-          </keep-alive>
-          <button @click="handlerClick">切换</button>
+            <div>
+                <common-item></common-item>
+                <async-common-item></async-common-item>
+            </div>
         `
-    });
-
-    app.component("input-item", {
-        template: `<input />`
     });
 
     app.component("common-item", {
         template: `<div>Hello World</div>`
     });
+    // 生命一个异步组件
+    app.component("async-common-item", Vue.defineAsyncComponent(() => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve({
+                    template: `<div>This is an async component</div>`
+                });
+            }, 2000);
+        });
+    }));
 
     const vm = app.mount("#app");
 
 </script>
-<body>
-<div id="app"></div>
-</body>
 </html>
