@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用VUE 实现基础的CSS动画</title>
+    <style>
+        @keyframes leftToRight {
+            0% {
+                transform: translateX(-100px);
+            }
+            50% {
+                transform: translateX(-50px);
+            }
+            0% {
+                transform: translateX(0px);
+            }
+        }
+
+        .animation {
+            animation: leftToRight 3s;
+        }
+    </style>
+    <script src="../js/vue.global.js"></script>
+</head>
+<body>
+<div id="app"></div>
+</body>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                animate: {
+                    animation: false
+                }
+            }
+        },
+        methods : {
+            handlerClick () {
+                this.animate.animation = !this.animate.animation;
+            },
+        },
+        template: `
+          <div>
+            <div :class="animate">Hello World</div>
+          <button @click="handlerClick">切换</button>
+          </div>
+        `
+    });
+
+    const vm = app.mount("#app");
+
+</script>
+</html>
